@@ -2,6 +2,7 @@ package Motion;
 
 import EV3.MoveTank;
 import Tools.Alert;
+import Tools.RunsMenu;
 
 public class BlackLineAlignment {
 
@@ -30,19 +31,19 @@ public class BlackLineAlignment {
 			Alert.notify("The black value is not set!");
 		}
 
-		while(Aligner.leftSensor.reflectedLight()>blackValue && Aligner.rightSensor.reflectedLight()>blackValue) {
+		while(Aligner.leftSensor.reflectedLight()>blackValue && Aligner.rightSensor.reflectedLight()>blackValue && RunsMenu.active) {
 			MoveTank.on(speed, speed);
 		}
 
 		if(Aligner.leftSensor.reflectedLight()<blackValue) {
-			while(Aligner.rightSensor.reflectedLight()>blackValue) {
+			while(Aligner.rightSensor.reflectedLight()>blackValue && RunsMenu.active) {
 				MoveTank.on(speed, 0);
 			}
 			MoveTank.off();
 
 		}
 		else {
-			while(Aligner.leftSensor.reflectedLight()>blackValue) {
+			while(Aligner.leftSensor.reflectedLight()>blackValue && RunsMenu.active) {
 				MoveTank.on(0, speed);
 			}
 			MoveTank.off();
@@ -57,7 +58,7 @@ public class BlackLineAlignment {
 			Alert.notify("The black value is not set!");
 		}
 
-		while(Aligner.getLeftSensorValue(Colors.BLACK)>blackValue && Aligner.getRightSensorValue(Colors.BLACK)>blackValue) {
+		while(Aligner.getLeftSensorValue(Colors.BLACK)>blackValue && Aligner.getRightSensorValue(Colors.BLACK)>blackValue && RunsMenu.active) {
 			MoveTank.on(speed, speed);
 		}
 
@@ -78,7 +79,7 @@ public class BlackLineAlignment {
 			Alert.notify("The black value is not set!");
 		}
 
-		while((side == Sides.LEFT?Aligner.getLeftSensorValue(Colors.BLACK):Aligner.getRightSensorValue(Colors.BLACK))>blackValue) {
+		while((side == Sides.LEFT?Aligner.getLeftSensorValue(Colors.BLACK):Aligner.getRightSensorValue(Colors.BLACK))>blackValue && RunsMenu.active) {
 			MoveTank.on(speed, speed);
 		}
 	}

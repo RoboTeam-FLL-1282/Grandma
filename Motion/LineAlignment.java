@@ -1,6 +1,7 @@
 package Motion;
 
 import EV3.MoveTank;
+import Tools.RunsMenu;
 
 public class LineAlignment {
 
@@ -57,7 +58,7 @@ public class LineAlignment {
 	
 	public static void turnToBlack(int turnSpeed, Sides side) {
 		while(Aligner.getLeftSensorValue(Colors.BLACK) != Aligner.getRightSensorValue(Colors.BLACK) 
-				|| precision(Aligner.getRightSensorValue(Colors.BLACK), 1) >= 0.6) {
+				|| precision(Aligner.getRightSensorValue(Colors.BLACK), 1) >= 0.6 && RunsMenu.active) {
 
 			if(side == Sides.LEFT) {
 				MoveTank.on(turnSpeed, -1*turnSpeed);
@@ -74,7 +75,7 @@ public class LineAlignment {
 
 	public static void turnToWhite(int turnSpeed, Sides side) {
 		while(Aligner.getLeftSensorValue(Colors.WHITE) != Aligner.getRightSensorValue(Colors.WHITE) 
-				/*|| precision(Aligner.rightSensor.reflectedLight(), 1) <= 0.5*/) {
+				/*|| precision(Aligner.rightSensor.reflectedLight(), 1) <= 0.5*/ && RunsMenu.active) {
 
 			if(side == Sides.LEFT) {
 				MoveTank.on(turnSpeed, -1*turnSpeed);

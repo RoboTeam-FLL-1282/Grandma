@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 import EV3.BrickButtons;
 import EV3.Buttons;
+import EV3.MoveTank;
 import Motion.GyroPID;
 
 public class RunsMenu implements SelectListener, BrickButtonsListener, Run{
@@ -16,6 +17,7 @@ public class RunsMenu implements SelectListener, BrickButtonsListener, Run{
 	Brick brick = new Brick(this, Buttons.ESCAPE);
 	Thread t;
 	int currentlyRuning;
+	public static boolean active = false;
 
 	boolean isRuning = false;
 
@@ -46,6 +48,7 @@ public class RunsMenu implements SelectListener, BrickButtonsListener, Run{
 	public void onSelect(String selectedLabel) {
 		if(!isRuning) {
 			isRuning = true;
+			active = true;
 			currentlyRuning = s.getSelectedIndex();
 			hide();
 			t = new Thread(runs.get(s.getSelectedIndex()));
@@ -55,7 +58,10 @@ public class RunsMenu implements SelectListener, BrickButtonsListener, Run{
 
 	@Override
 	public void onPress(Buttons button) {
-		t.interrupt();
+		active = false;
+		isRuning = false;
+		while(t.isAlive());
+		MoveTank.off();
 		pids.get(currentlyRuning).stopPID();
 		pids.get(currentlyRuning).closePID();
 		show();

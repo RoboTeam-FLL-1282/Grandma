@@ -7,7 +7,7 @@ public class Aligner {
 
 	// Members
 	static double blackValue = 0.12;
-	static double whiteValue = 0.95;
+	static double whiteValue = 0.92;
 	public static ColorSensor leftSensor;
 	public static ColorSensor rightSensor;
 	

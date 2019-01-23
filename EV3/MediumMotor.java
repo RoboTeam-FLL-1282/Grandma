@@ -5,6 +5,7 @@ import lejos.hardware.port.Port;
 import lejos.utility.Delay;
 
 public class MediumMotor {
+	
 	EV3MediumRegulatedMotor motor;
 
 	/**

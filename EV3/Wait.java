@@ -8,6 +8,7 @@ public abstract class Wait {
 	 * @param milliSeconds
 	 */
 	public static void time(int milliSeconds) {
+		long startWait = System.currentTimeMillis();
 		Delay.msDelay(milliSeconds);
 	}
 	

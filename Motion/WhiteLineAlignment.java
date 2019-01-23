@@ -3,6 +3,7 @@ package Motion;
 import EV3.MoveTank;
 
 import Tools.Alert;
+import Tools.RunsMenu;
 
 public class WhiteLineAlignment {
 
@@ -30,19 +31,19 @@ static double whiteValue = Double.NaN;
 			Alert.notify("The black value is not set!");
 		}
 		
-		while(Aligner.leftSensor.reflectedLight()<whiteValue && Aligner.rightSensor.reflectedLight()<whiteValue) {
+		while(Aligner.leftSensor.reflectedLight()<whiteValue && Aligner.rightSensor.reflectedLight()<whiteValue && RunsMenu.active) {
 			MoveTank.on(speed, speed);
 		}
 
 		if(Aligner.leftSensor.reflectedLight()>whiteValue) {
-			while(Aligner.rightSensor.reflectedLight()<whiteValue) {
+			while(Aligner.rightSensor.reflectedLight()<whiteValue && RunsMenu.active) {
 				MoveTank.on(speed, 0);
 			}
 			MoveTank.off();
 
 		}
 		else {
-			while(Aligner.leftSensor.reflectedLight()<whiteValue) {
+			while(Aligner.leftSensor.reflectedLight()<whiteValue && RunsMenu.active) {
 				MoveTank.on(0, speed);
 			}
 			MoveTank.off();
@@ -57,7 +58,7 @@ static double whiteValue = Double.NaN;
 			Alert.notify("The black value is not set!");
 		}
 		
-		while(Aligner.getLeftSensorValue(Colors.BLACK)<whiteValue && Aligner.getRightSensorValue(Colors.BLACK)<whiteValue) {
+		while(Aligner.getLeftSensorValue(Colors.BLACK)<whiteValue && Aligner.getRightSensorValue(Colors.BLACK)<whiteValue && RunsMenu.active) {
 			MoveTank.on(speed, speed);
 		}
 		
@@ -78,7 +79,7 @@ static double whiteValue = Double.NaN;
 			Alert.notify("The white value is not set!");
 		}
 
-		while((side == Sides.LEFT?Aligner.getLeftSensorValue(Colors.BLACK):Aligner.getRightSensorValue(Colors.BLACK))<whiteValue) {
+		while((side == Sides.LEFT?Aligner.getLeftSensorValue(Colors.BLACK):Aligner.getRightSensorValue(Colors.BLACK))<whiteValue && RunsMenu.active) {
 			MoveTank.on(speed, speed);
 		}
 	}
