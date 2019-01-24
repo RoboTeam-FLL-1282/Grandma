@@ -2,7 +2,7 @@ package EV3;
 import EV3Library.*;
 import lejos.hardware.lcd.LCD;
 import lejos.utility.Delay;
-public abstract class Display {
+public class Display {
 	
 	private static boolean set = true;
 	
@@ -23,7 +23,7 @@ public abstract class Display {
 	 * @param y
 	 */
 	public static void text(String text, int x, int y) {
-		if (set) setScreen();
+		if (set) setScreen(); // Sets the screen in case it wasn't called yet. 
 		TextUtils.realDrawString(text, x, y);
 	}
 	
@@ -31,7 +31,7 @@ public abstract class Display {
 	 * Clears the screen.
 	 */
 	public static void resetScreen() {
-		if (set) setScreen();
+		if (set) setScreen(); // Sets the screen in case it wasn't called yet. 
 		LCD.clear();
 	}
 }

@@ -14,15 +14,17 @@ public class PortView implements Runnable{
 	
 	static boolean run = true;
 	
+	// Create sensors instances.
 	static UltraSonicSensor u = new UltraSonicSensor(Ports.S1);
-	//static ColorSensor c1 = new ColorSensor(Ports.S2);
+	static ColorSensor c1 = new ColorSensor(Ports.S2);
 	static GyroSensor g = new GyroSensor(Ports.S3);
-//	static ColorSensor c2 = new ColorSensor(Ports.S4);
+	static ColorSensor c2 = new ColorSensor(Ports.S4);
 	
 	public static void main(String[] args) {
 		
-	//	c1.setReflectedLightMode();
-		//c2.setReflectedLightMode();
+		// Set sensor modes and start displaying the UI.
+		c1.setReflectedLightMode();
+		c2.setReflectedLightMode();
 		Aligner.setSensorsPorts(Ports.S2, Ports.S4);
 
 		Thread t = new Thread(new PortView());
@@ -37,6 +39,7 @@ public class PortView implements Runnable{
 	@Override
 	public void run() {
 		while(run) {
+			// Displaying the the sensor's values.
 			Alert.deleteAll();
 			Alert.view("1. US", u.distance());
 			Alert.view("2. Color", Aligner.getLeftSensorValue(Colors.WHITE));

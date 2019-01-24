@@ -4,7 +4,6 @@ import lejos.hardware.lcd.Font;
 
 /**
  * Utility class containing methods for drawing text on the LCD screen
- * @author shea
  */
 public class TextUtils {
 

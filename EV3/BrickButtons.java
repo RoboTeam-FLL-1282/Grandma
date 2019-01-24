@@ -3,9 +3,10 @@ package EV3;
 import lejos.hardware.Button;
 import lejos.hardware.Key;
 
-public abstract class BrickButtons {
+public class BrickButtons {
 
 	/**
+	 * Converts a "Buttons" value to the global Button sets.
 	 * @param button
 	 * @return - A new button according to the button set.
 	 */

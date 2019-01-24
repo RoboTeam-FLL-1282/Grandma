@@ -20,6 +20,11 @@ public class Unique {
 		}
 	}	
 	
+	/**
+	 * Aligns on line when coming in a big angle.
+	 * @param speed
+	 * @param side
+	 */
 	public static void alignOnBigAngle(int speed, Sides side) {
 		BlackLineAlignment.find(side, speed);
 		MoveTank.onForDegrees(0, 100, 200, true);

@@ -100,10 +100,11 @@ public class GyroPID extends Thread {
 	public void run() {
 		while(run && opened) {
 			double gyroValue = g.angle();
-			double turn = pid.calculateTurn(gyroValue);
+			double turn = pid.calculateTurn(gyroValue); // Calculates the turn.
 			double leftSpeed;
 			double rightSpeed;
-			if(pid.baseSpeed > 0) {
+			// Move depending on a direction.
+			if(pid.baseSpeed > 0) { 
 				leftSpeed  = pid.baseSpeed - turn;
 				rightSpeed = pid.baseSpeed + turn;
 			}
@@ -112,9 +113,9 @@ public class GyroPID extends Thread {
 				rightSpeed = pid.baseSpeed - turn;
 			}
 			display(turn, leftSpeed, rightSpeed, gyroValue); // Not necessary 
-			MoveTank.on((int)leftSpeed, (int)rightSpeed);
-			Wait.time((int)(pid.time*1000));
-			while(!run && opened) {
+			MoveTank.on((int)leftSpeed, (int)rightSpeed); //Move
+			Wait.time((int)(pid.time*1000)); // Wait
+			while(!run && opened) { // Stop if PID is stoped. 
 				Wait.time(100);
 			}
 		}

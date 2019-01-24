@@ -5,6 +5,10 @@ import Tools.RunsMenu;
 
 public class LineAlignment {
 
+	/**
+	 * Align on Black and White line.
+	 * @param speed
+	 */
 	public static void align(int speed) {
 
 		int turnSpeed = speed-speed/2;
@@ -18,6 +22,11 @@ public class LineAlignment {
 		turnToWhite(turnSpeed, side);
 	}
 
+	/**
+	 * Align on white and black with only one sensor.
+	 * @param side
+	 * @param speed
+	 */
 	public static void align(Sides side, int speed) {
 
 		int turnSpeed = speed-speed/2;
@@ -32,6 +41,10 @@ public class LineAlignment {
 	}
 
 
+	/**
+	 * Aligns on black line.
+	 * @param speed
+	 */
 	public static void alignOnBlack(int speed) {
 
 
@@ -44,6 +57,10 @@ public class LineAlignment {
 
 	}
 
+	/**
+	 * Aligns on white line.
+	 * @param speed
+	 */
 	public static void alignOnWhite(int speed) {
 
 
@@ -56,6 +73,11 @@ public class LineAlignment {
 
 	}
 	
+	/**
+	 * Turn on a black line until both of the sensors return the same value.
+	 * @param turnSpeed
+	 * @param side
+	 */
 	public static void turnToBlack(int turnSpeed, Sides side) {
 		while(Aligner.getLeftSensorValue(Colors.BLACK) != Aligner.getRightSensorValue(Colors.BLACK) 
 				|| precision(Aligner.getRightSensorValue(Colors.BLACK), 1) >= 0.6 && RunsMenu.active) {
@@ -73,6 +95,11 @@ public class LineAlignment {
 		MoveTank.off();
 	}
 
+	/**
+	 * Turn on a white line until both of the sensors both of the sensors return the same value.
+	 * @param turnSpeed
+	 * @param side
+	 */
 	public static void turnToWhite(int turnSpeed, Sides side) {
 		while(Aligner.getLeftSensorValue(Colors.WHITE) != Aligner.getRightSensorValue(Colors.WHITE) 
 				/*|| precision(Aligner.rightSensor.reflectedLight(), 1) <= 0.5*/ && RunsMenu.active) {
@@ -90,6 +117,12 @@ public class LineAlignment {
 		MoveTank.off();
 	}
 
+	/**
+	 * Returns a double with a specific precision.
+	 * @param number
+	 * @param precision
+	 * @return
+	 */
 	public static double precision(double number, int precision) {
 		double mul = Math.pow(10, precision);
 		return ((int)(number*mul))/mul;

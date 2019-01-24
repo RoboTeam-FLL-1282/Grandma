@@ -50,6 +50,11 @@ public class BlackLineAlignment {
 		}
 	}
 
+	/**
+	 * Finds black line.
+	 * @param speed
+	 * @return
+	 */
 	public static Sides find(int speed) {
 
 		blackValue = Aligner.blackValue;
@@ -71,6 +76,11 @@ public class BlackLineAlignment {
 		}
 	}
 
+	/**
+	 * Finds black line with only one sensor.
+	 * @param side
+	 * @param speed
+	 */
 	public static void find(Sides side, int speed) {
 
 		blackValue = Aligner.blackValue;		

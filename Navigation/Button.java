@@ -16,6 +16,10 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class Button extends JPanel implements MouseListener, MouseMotionListener {
+	
+	/////////////////////////////////////////////
+	///////////// NOT USED //////////////////////
+	/////////////////////////////////////////////
 
 	ButtonListener buttonListener;
 	String text;

@@ -12,6 +12,8 @@ public class MotorControl {
 	static MediumMotor c = new MediumMotor(Ports.C);
 	
 	public static void main(String[] args) {
+		
+		// Set screen and start displaying.
 		Display.setScreen();
 		speed();
 		
@@ -21,6 +23,9 @@ public class MotorControl {
 		b.close();	
 	}
 	
+	/**
+	 * Displays the UI and listens for the brick buttons.
+	 */
 	public static void control() {
 		Display.setScreen();
 		Display.text("        B+    ", 0, 10);
@@ -31,7 +36,7 @@ public class MotorControl {
 
 		boolean end = false;
 		boolean back = false;
-		while(!end && !back) {
+		while(!end && !back) { // Check which button was pressed.
 			Button.waitForAnyEvent();
 			while (Button.DOWN.isDown()) {
 				b.on(speed*-1);
@@ -58,6 +63,9 @@ public class MotorControl {
 		setSpeed();
 	}
 	
+	/**
+	 * Start displaying the UI and listens for the brick buttons.
+	 */
 	public static void setSpeed() {
 		boolean next = false;
 		while(!next) {
@@ -78,6 +86,7 @@ public class MotorControl {
 		control();
 	}
 	
+	// For debugging...
 	public static void speed() {
 		Display.resetScreen();
 		Display.text("speed: " + speed, 50, 50);

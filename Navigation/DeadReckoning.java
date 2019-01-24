@@ -30,6 +30,10 @@ import javax.swing.JTextField;
 @SuppressWarnings("serial")
 public class DeadReckoning extends GUI implements MouseListener, MouseMotionListener, ButtonListener{
 
+	/////////////////////////////////////////////
+	///////////// NOT USED //////////////////////
+	/////////////////////////////////////////////
+	
 	// Members:
 	int width = 75;
 	int height = 92;

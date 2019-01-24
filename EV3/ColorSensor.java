@@ -9,6 +9,7 @@ public class ColorSensor {
 	Colour cs;
 	
 	/**
+	 * Constructor:
 	 * @param port - Sensor's port.
 	 */
 	public ColorSensor(Port port) {

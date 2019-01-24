@@ -39,11 +39,21 @@ public class Aligner {
 		rightSensor.reflectedLight();
 	}
 	
+	/**
+	 * Returns the left sensor object.
+	 * @param color
+	 * @return
+	 */
 	public static double getLeftSensorValue(Colors color) {
 		int precision = (color == Colors.BLACK)?(blackValue+"").length()-2:(blackValue+"").length()-2;
 		return LineAlignment.precision(leftSensor.reflectedLight(), precision);
 	}
 	
+	/**
+	 * Returns the left sensor object.
+	 * @param color
+	 * @return
+	 */
 	public static double getRightSensorValue(Colors color) {
 		int precision = (color == Colors.BLACK)?(blackValue+"").length()-2:(blackValue+"").length()-2;
 		return LineAlignment.precision(Unique.colorConvertor(rightSensor.reflectedLight(), color), precision);

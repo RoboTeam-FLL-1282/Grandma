@@ -1,6 +1,6 @@
 package EV3;
 import EV3Library.sound;
-public abstract class Sound {
+public class Sound {
 	
 	/**
 	 * Plays a music file.

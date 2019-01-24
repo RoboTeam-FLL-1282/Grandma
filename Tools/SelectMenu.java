@@ -87,6 +87,7 @@ public class SelectMenu implements BrickButtonsListener{
 
 	@Override
 	public void onPress(Buttons button) {
+		// Check which button was pressed.
 		if(button == Buttons.UP) {
 			selected--;
 			if(selected < 0)

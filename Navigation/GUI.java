@@ -22,6 +22,10 @@ import javax.swing.SwingUtilities;
 @SuppressWarnings("serial")
 public class GUI extends JPanel implements MouseMotionListener, MouseListener {
 
+	/////////////////////////////////////////////
+	///////////// NOT USED //////////////////////
+	/////////////////////////////////////////////
+	
 	ArrayList<Point> points = new ArrayList<Point>();
 	JFrame frame;
 	HermiteSpline si;

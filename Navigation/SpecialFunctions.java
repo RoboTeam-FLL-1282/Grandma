@@ -4,16 +4,12 @@ import EV3.BrickButtons;
 import EV3.BrickLight;
 import EV3.Display;
 import EV3.MoveTank;
-import EV3.Ports;
 import EV3.Sound;
 import EV3.Wait;
 import Motion.Accelerator;
-import Motion.Aligner;
 import Motion.BlackLineAlignment;
 import Motion.GyroPID;
-import Motion.LineAlignment;
 import Motion.Sides;
-import Motion.Unique;
 import Motion.WhiteLineAlignment;
 import Tools.RunsMenu;
 
@@ -21,6 +17,9 @@ public class SpecialFunctions {
 
 	static boolean smiley = true;
 	
+	/**
+	 * Display smiley, sound a beep, and led blinks. 
+	 */
 	public static void smiley() {
 		new Thread() {
 			@Override
@@ -42,22 +41,28 @@ public class SpecialFunctions {
 		}.start();
 	}
 	
+	/**
+	 * Turns smiley off.
+	 */
 	public static void smileyOff() {
 		smiley = false;
 	}
 	
+	/**
+	 * Navigates to the far T.
+	 * @return
+	 */
 	public static GyroPID navigateToOpsiteSection() {
 
-		//Aligner.setWhiteValue(0.85);
 		GyroPID pid = new GyroPID(-10, 1, 0.001, 0.001);
 		pid.setBaseSpeed(-250);
 		smiley();
 		Sound.beep(100);
 		BrickButtons.waitForAnyPress();
 		smileyOff();
-		pid.g.recalibrate();
+		GyroPID.g.recalibrate();
 
-		// Move robot
+		// Move robot forwards and align on the white line.
 		Accelerator.accelerate(0.5, -150, -250, false);
 		if(!RunsMenu.active) return pid; // Break point
 		Sound.beep(100);
@@ -68,23 +73,23 @@ public class SpecialFunctions {
 		if(!RunsMenu.active) return pid; // Break point
 		
 		// Align on white line and then turn x degrees
-		//		Display.resetScreen();
 		WhiteLineAlignment.align(-250);
 		if(!RunsMenu.active) return pid; // Break point
 		Sound.beep(100);
-		pid.g.reset();
-		//MoveTank.onForCent(200, 200, 500, true);
-	
+		GyroPID.g.reset();
+
+		//Turn and move to the T.
 		Traveler t = new Traveler(0, 0, 12, 8.2);
 		t.turnInSpot(70, -100);
 		if(!RunsMenu.active) return pid; // Break point
-		pid.setTarget(pid.g.angle());
+		pid.setTarget(GyroPID.g.angle());
 		pid.startPID();
 		if(!RunsMenu.active) return pid; // Break point
 		Wait.time(1000);
 		pid.stopPID();
 		if(!RunsMenu.active) return pid; // Break point
 		
+		// Find line, move forwards and then align backwards.
 		BlackLineAlignment.find(Sides.LEFT, -250);
 		if(!RunsMenu.active) return pid; // Break point
 		MoveTank.onForCent(-250, -250, 200, true);
@@ -95,27 +100,23 @@ public class SpecialFunctions {
 		if(!RunsMenu.active) return pid; // Break point
 		MoveTank.onForCent(-100, -100, 150, true);
 		if(!RunsMenu.active) return pid; // Break point
-		//WhiteLineAlignment.align(100);
 		BlackLineAlignment.align(100);
 		if(!RunsMenu.active) return pid; // Break point
-		//LineAlignment.align(100);
  
-		//Unique.alignOnBigAngle(-100, Sides.LEFT);
 		return pid;
 	}
 	
 	public static GyroPID navigateToFarT() {
 
-		//Aligner.setWhiteValue(0.85);
 		GyroPID pid = new GyroPID(-10, 1, 0.001, 0.001);
 		pid.setBaseSpeed(-250);
 		smiley();
 		Sound.beep(100);
 		BrickButtons.waitForAnyPress();
 		smileyOff();
-		pid.g.recalibrate();
+		GyroPID.g.recalibrate();
 
-		// Move robot
+		// Move robot forwards and align on the white line.
 		Accelerator.accelerate(0.5, -150, -250, false);
 		if(!RunsMenu.active) return pid; // Break point
 		Sound.beep(100);
@@ -131,19 +132,20 @@ public class SpecialFunctions {
 		WhiteLineAlignment.align(-250);
 		if(!RunsMenu.active) return pid; // Break point
 		Sound.beep(100);
-		pid.g.reset();
-		//MoveTank.onForCent(200, 200, 500, true);
+		GyroPID.g.reset();
 	
+		// Turn and move to the T.
 		Traveler t = new Traveler(0, 0, 12, 8.2);
 		t.turnInSpot(70, -100);
 		if(!RunsMenu.active) return pid; // Break point
-		pid.setTarget(pid.g.angle());
+		pid.setTarget(GyroPID.g.angle());
 		pid.startPID();
 		if(!RunsMenu.active) return pid; // Break point
 		Wait.time(1000);
 		pid.stopPID();
 		if(!RunsMenu.active) return pid; // Break point
 		
+		// Find black line, move forwards and align on the line.
 		BlackLineAlignment.find(Sides.LEFT, -250);
 		if(!RunsMenu.active) return pid; // Break point
 		MoveTank.onForCent(-250, -250, 200, true);
@@ -154,12 +156,9 @@ public class SpecialFunctions {
 		if(!RunsMenu.active) return pid; // Break point
 		MoveTank.onForCent(-100, -100, 100, true);
 		if(!RunsMenu.active) return pid; // Break point
-		//WhiteLineAlignment.align(100);
 		BlackLineAlignment.align(100);
 		if(!RunsMenu.active) return pid; // Break point
-		//LineAlignment.align(100);
  
-		//Unique.alignOnBigAngle(-100, Sides.LEFT);
 		return pid;
 	}
 

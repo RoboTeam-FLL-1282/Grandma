@@ -50,6 +50,11 @@ static double whiteValue = Double.NaN;
 		}
 	}
 	
+	/**
+	 * Finds a white line.
+	 * @param speed
+	 * @return
+	 */
 	public static Sides find(int speed) {
 		
 		whiteValue = Aligner.whiteValue;
@@ -71,6 +76,11 @@ static double whiteValue = Double.NaN;
 		}
 	}
 	
+	/**
+	 * Finds a white line with only one sensor.
+	 * @param side
+	 * @param speed
+	 */
 	public static void find(Sides side, int speed) {
 
 		whiteValue = Aligner.whiteValue;

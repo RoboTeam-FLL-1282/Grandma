@@ -5,6 +5,10 @@ import lejos.hardware.port.Port;
 import lejos.hardware.port.SensorPort;
 
 public interface Ports {
+	
+	/**
+	 * Constants which holds the EV3 ports objects.
+	 */
 
 	public final Port A = MotorPort.A;
 	public final Port B = MotorPort.B;

@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * Convenience class for reading and writing data to files on the EV3
- * @author shea
+ * @author
  */
 public class Logging {
 

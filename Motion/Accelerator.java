@@ -1,7 +1,6 @@
 package Motion;
 
 import EV3.MoveTank;
-import EV3.Sound;
 import EV3.Wait;
 
 public class Accelerator {

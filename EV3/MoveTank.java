@@ -2,7 +2,7 @@ package EV3;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.port.Port;
 import lejos.utility.Delay;
-public abstract class MoveTank {
+public class MoveTank {
 
 	static EV3LargeRegulatedMotor leftMotor;
 	static EV3LargeRegulatedMotor rightMotor;

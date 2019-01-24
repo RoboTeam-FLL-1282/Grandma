@@ -2,7 +2,7 @@ package EV3;
 
 import lejos.hardware.Button;
 
-public abstract class BrickLight {
+public class BrickLight {
 
 	/**
 	 * Turns on the brick's LEDs. 

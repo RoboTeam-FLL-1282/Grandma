@@ -1,45 +1,110 @@
 package FLL;
 
-import EV3.BrickButtons;
+
 import EV3.MoveTank;
-import EV3.Ports;
 import EV3.Sound;
 import EV3.Wait;
-import Motion.Aligner;
+import Motion.BlackLineAlignment;
 import Motion.GyroPID;
-import Motion.LineAlignment;
-import Motion.Sides;
 import Motion.WhiteLineAlignment;
 import Navigation.SpecialFunctions;
 import Navigation.Traveler;
-import Tools.Default;
+import Tools.MediumMotors;
+import Tools.Run;
+import Tools.RunsMenu;
 
-public class Run_3 {
-
-	public static void main(String[] args) {
+public class Run_3 implements Runnable, MediumMotors{
+	
+	Run runnable;
+	public GyroPID pid = new GyroPID();
+	
+	/**
+	 * Used for adding a listener. 
+	 * @param runnable
+	 */
+	public Run_3(Run runnable) {
+		this.runnable = runnable;
+	}
+	
+	@Override
+	public void run() {		
 		
-		Default.settings();
-		Aligner.setSensorsPorts(Ports.S2, Ports.S4);
-		Aligner.setWhiteValue(0.85);
-//	
-//		GyroPID pid = new GyroPID(0, 1, 0.001, 0.001);
-//		pid.setBaseSpeed(-250);
-		SpecialFunctions.smiley();
+		pid = SpecialFunctions.navigateToOpsiteSection(); // Navigates to the far T.  
+
+		Traveler t = new Traveler(0, 0, 12, 8.2);
+		
+		// Moving towards the food production.
+		MoveTank.onForCent(-100, -100, 300, true);
+		if(!RunsMenu.active) return; // Break point
+		
 		Sound.beep(100);
-		BrickButtons.waitForAnyPress();
-		SpecialFunctions.smileyOff();
-//	
-//		pid.g.recalibrate();
-//		pid.startPID();
-//		Wait.time(1000);
-//		pid.stopPID();
+		c.onForDegrees(500, 540, true);
+		if(!RunsMenu.active) return; // Break point
 		
-		MoveTank.onForCent(-250, -250, 300, true);
-		WhiteLineAlignment.align(-150);
-		MoveTank.onForCent(-150, -150, 50, true);
+		// Aligns on line and approaches M013.
+		BlackLineAlignment.align(100);
+		if(!RunsMenu.active) return; // Break point
+		
+		MoveTank.onForCent(100, 100, 160, true);
+		if(!RunsMenu.active) return; // Break point
+
+		// Turning..
+		t.turnInSpot(50, -100);
+		if(!RunsMenu.active) return; // Break point
+
+		MoveTank.onForCent(200, 200, 700, true);
+		if(!RunsMenu.active) return; // Break point
+
+		Wait.time(200);
+		MoveTank.onForCent(-200, -200, 700, true);
+		if(!RunsMenu.active) return; // Break point
+
+		
+		t.turnInSpot(50, 100);
+		if(!RunsMenu.active) return; // Break point
+		
+		MoveTank.onForCent(-200, -200, 300, true);
+		if(!RunsMenu.active) return; // Break point
+
+		// Aligns on line and moves towards M15.
+		BlackLineAlignment.align(100);
+		if(!RunsMenu.active) return; // Break point
+		WhiteLineAlignment.align(100);
+		if(!RunsMenu.active) return; // Break point
+		BlackLineAlignment.align(-100);
+		if(!RunsMenu.active) return; // Break point
 		
 		
+		MoveTank.onForCent(100, 100, 160, true);
+		if(!RunsMenu.active) return; // Break point
 		
+		t.turnInSpot(145, -100);
+		if(!RunsMenu.active) return; // Break point
+		
+		pid.setTarget(GyroPID.g.angle());
+		pid.setBaseSpeed(250);
+		pid.startPID();
+		Wait.time(4700);
+		pid.stopPID();
+		if(!RunsMenu.active) return; // Break point
+		
+		Wait.time(500);
+		
+		// Coming back to space.
+		MoveTank.on(-600, -600);
+		if(!RunsMenu.active) return; // Break point
+		Wait.time(2500);
+		MoveTank.off();
+		if(!RunsMenu.active) return; // Break point
+		
+		t.turnInSpot(20, 100);
+		if(!RunsMenu.active) return; // Break point
+		
+		MoveTank.onForCent(-900, -900, 1600, true);
+		if(!RunsMenu.active) return; // Break point
+	
+		pid.closePID();
+		runnable.runFinished();
 	}
 	
 }
