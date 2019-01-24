@@ -24,7 +24,7 @@ public class SpecialFunctions {
 		new Thread() {
 			@Override
 			public void run() {
-				while(smiley) {
+				while(smiley && RunsMenu.active) {
 					Display.resetScreen();
 					BrickLight.on(1);
 					Wait.time(500);
@@ -67,7 +67,7 @@ public class SpecialFunctions {
 		if(!RunsMenu.active) return pid; // Break point
 		Sound.beep(100);
 		pid.startPID();
-		Wait.time(500);
+		Wait.time(700);
 		pid.stopPID();
 		Sound.beep(100);
 		if(!RunsMenu.active) return pid; // Break point

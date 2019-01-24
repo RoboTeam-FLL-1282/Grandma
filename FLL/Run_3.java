@@ -69,9 +69,9 @@ public class Run_3 implements Runnable, MediumMotors{
 		// Aligns on line and moves towards M15.
 		BlackLineAlignment.align(100);
 		if(!RunsMenu.active) return; // Break point
-		WhiteLineAlignment.align(100);
+		//WhiteLineAlignment.align(100);
 		if(!RunsMenu.active) return; // Break point
-		BlackLineAlignment.align(-100);
+		//BlackLineAlignment.align(-100);
 		if(!RunsMenu.active) return; // Break point
 		
 		
@@ -100,8 +100,10 @@ public class Run_3 implements Runnable, MediumMotors{
 		t.turnInSpot(20, 100);
 		if(!RunsMenu.active) return; // Break point
 		
-		MoveTank.onForCent(-900, -900, 1600, true);
+		MoveTank.onForCent(-900, -900, 1000, true);
 		if(!RunsMenu.active) return; // Break point
+		t.turnInSpot(30, 100);
+		MoveTank.onForCent(-900, -900, 700, true);
 	
 		pid.closePID();
 		runnable.runFinished();

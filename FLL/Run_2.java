@@ -83,9 +83,9 @@ public class Run_2 implements Runnable{
 		if(!RunsMenu.active) return; // Break point
 		BlackLineAlignment.find(-200);
 		if(!RunsMenu.active) return; // Break point
-		MoveTank.onForCent(-200, -200, 250, true);
+		MoveTank.onForCent(-200, -200, 200, true);
 		if(!RunsMenu.active) return; // Break point
-		t.turnInSpot(30, -100);
+		t.turnInSpot(45, -100);
 		
 		// Align in line.
 		WhiteLineAlignment.align(100);
@@ -112,7 +112,7 @@ public class Run_2 implements Runnable{
 		t.turnInSpot(30, -100);
 		MoveTank.onForCent(500, 500, 510, true);
 		if(!RunsMenu.active) return; // Break point
-		t.turnInSpot(35, 625);
+		t.turnInSpot(30, 625);
 		MoveTank.onForCent(1000, 1000, 1300, true);
 		if(!RunsMenu.active) return; // Break point
 		
