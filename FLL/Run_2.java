@@ -31,7 +31,7 @@ public class Run_2 implements Runnable{
 		
 		Aligner.setWhiteValue(0.85);
 		
-		pid = new GyroPID(0, 1.5, 0.001, 0.001);
+		pid = new GyroPID(0, 5, 0.001, 0.001);
 		pid.setBaseSpeed(-200);
 		
 		if(!RunsMenu.active) return; //Break point
