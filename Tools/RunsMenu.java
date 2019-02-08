@@ -6,7 +6,7 @@ import EV3.Buttons;
 import EV3.MoveTank;
 import Motion.GyroPID;
 
-public class RunsMenu implements SelectListener, BrickButtonsListener, Run{
+public class RunsMenu implements SelectListener, BrickButtonsListener, Run, MediumMotors{
 
 	Runnable runnable;
 	SelectMenu s = new SelectMenu();
@@ -80,6 +80,8 @@ public class RunsMenu implements SelectListener, BrickButtonsListener, Run{
 		isRuning = false;
 		while(t.isAlive());
 		MoveTank.off();
+		c.off();
+		b.off();
 		// Stop and close the run's PID.
 		pids.get(currentlyRuning).stopPID();
 		pids.get(currentlyRuning).closePID();

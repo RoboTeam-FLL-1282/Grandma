@@ -55,13 +55,13 @@ public class Accelerator {
 	}
 	
 	public static void acceleratePID(GyroPID pid, double duration, double startSpeed, double endSpeed, boolean brakeAtEnd) {
-		double change = duration/(endSpeed - startSpeed);
-		int loops = (int)((endSpeed - startSpeed)/change);
-		int wait = (int)(duration/loops*1000);
+		
+		int loops = (int)Math.abs((endSpeed - startSpeed)/duration);
+		int wait = (int)(duration/loops * 1000);
+		double change = (endSpeed - startSpeed)/loops;
 		
 		double speed = (int)startSpeed;
 		
-		pid.startPID();
 		for(int i = 0; i<loops; i++) {
 			pid.setBaseSpeed(speed);
 			speed += change;
@@ -71,5 +71,7 @@ public class Accelerator {
 		if(brakeAtEnd)
 			pid.stopPID();
 	}
+	
+	
 	
 }

@@ -1,20 +1,23 @@
 package FLL;
-import EV3.*;
-import Motion.Aligner;
-import Motion.Colors;
-import Motion.GyroPID;
-import Motion.WhiteLineAlignment;
-import Navigation.Traveler;
-import Tools.Alert;
-import Tools.Default;
-public class test{
-	
-	public static void main(String[] args) {
 
-		MediumMotor b = new MediumMotor(Ports.B);
-		b.onForDegrees(100, 600, true);
+import EV3.BrickButtons;
+import EV3.Wait;
+import Motion.EncodersPID;
+import Tools.Default;
+
+public class test {
+
+	public static void main(String[] args) {
+		
+		Default.settings();
+		
+		EncodersPID pid = new EncodersPID(0, 2, 0, 0);
+		BrickButtons.waitForAnyPress();
+		
+		pid.startPID();
+		Wait.time(300000);
+		pid.stopPID();
 		
 	}
-}
-
 	
+}

@@ -4,8 +4,8 @@ import lejos.hardware.port.Port;
 import lejos.utility.Delay;
 public class MoveTank {
 
-	static EV3LargeRegulatedMotor leftMotor;
-	static EV3LargeRegulatedMotor rightMotor;
+	public static EV3LargeRegulatedMotor leftMotor;
+	public static EV3LargeRegulatedMotor rightMotor;
 	
 	/**
 	 * Must be called before any other method.

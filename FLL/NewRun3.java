@@ -12,7 +12,7 @@ import Tools.MediumMotors;
 import Tools.Run;
 import Tools.RunsMenu;
 
-public class Run_3 implements Runnable, MediumMotors{
+public class NewRun3 implements Runnable, MediumMotors{
 	
 	Run runnable;
 	public GyroPID pid = new GyroPID();
@@ -21,14 +21,14 @@ public class Run_3 implements Runnable, MediumMotors{
 	 * Used for adding a listener. 
 	 * @param runnable
 	 */
-	public Run_3(Run runnable) {
+	public NewRun3(Run runnable) {
 		this.runnable = runnable;
 	}
 	
 	@Override
 	public void run() {		
 		
-		pid = SpecialFunctions.getToOppositeSection(); 	// Navigates to the far T. Replaced from navigateToOpsiteSection
+		pid = SpecialFunctions.navigateToOpsiteSection(); // Navigates to the far T.  
 
 		Traveler t = new Traveler(0, 0, 12, 8.2);
 		
@@ -41,10 +41,40 @@ public class Run_3 implements Runnable, MediumMotors{
 		if(!RunsMenu.active) return; // Break point
 		
 		// Aligns on line and approaches M013.
-		BlackLineAlignment.align(200);
+		BlackLineAlignment.align(100);
 		if(!RunsMenu.active) return; // Break point
 		
-		MoveTank.onForCent(100, 100, 120, true);
+		MoveTank.onForCent(100, 100, 160, true);
+		if(!RunsMenu.active) return; // Break point
+
+		// Turning..
+		t.turnInSpot(50, -100);
+		if(!RunsMenu.active) return; // Break point
+
+		MoveTank.onForCent(200, 200, 700, true);
+		if(!RunsMenu.active) return; // Break point
+
+		Wait.time(200);
+		MoveTank.onForCent(-200, -200, 700, true);
+		if(!RunsMenu.active) return; // Break point
+
+		
+		t.turnInSpot(50, 100);
+		if(!RunsMenu.active) return; // Break point
+		
+		MoveTank.onForCent(-200, -200, 300, true);
+		if(!RunsMenu.active) return; // Break point
+
+		// Aligns on line and moves towards M15.
+		BlackLineAlignment.align(100);
+		if(!RunsMenu.active) return; // Break point
+		//WhiteLineAlignment.align(100);
+		if(!RunsMenu.active) return; // Break point
+		//BlackLineAlignment.align(-100);
+		if(!RunsMenu.active) return; // Break point
+		
+		
+		MoveTank.onForCent(100, 100, 160, true);
 		if(!RunsMenu.active) return; // Break point
 		
 		t.turnInSpot(145, -100);
@@ -60,24 +90,19 @@ public class Run_3 implements Runnable, MediumMotors{
 		Wait.time(500);
 		
 		// Coming back to space.
-		MoveTank.onForCent(-600, -600, 1000, false);
+		MoveTank.on(-600, -600);
 		if(!RunsMenu.active) return; // Break point
-		t.turnInSpot(90, 200);
+		Wait.time(2500);
+		MoveTank.off();
 		if(!RunsMenu.active) return; // Break point
-		MoveTank.onForCent(-600, -600, 700, false);
+		
+		t.turnInSpot(20, 100);
 		if(!RunsMenu.active) return; // Break point
-		t.turnInSpot(70, -200);
+		
+		MoveTank.onForCent(-900, -900, 1000, true);
 		if(!RunsMenu.active) return; // Break point
-		MoveTank.onForCent(-600, -600, 1500, true);
-		if(!RunsMenu.active) return; // Break point
-//		
-//		t.turnInSpot(20, 100);
-//		if(!RunsMenu.active) return; // Break point
-//		
-//		MoveTank.onForCent(-900, -900, 1000, true);
-//		if(!RunsMenu.active) return; // Break point
-//		t.turnInSpot(30, 100);
-//		MoveTank.onForCent(-900, -900, 700, true);
+		t.turnInSpot(30, 100);
+		MoveTank.onForCent(-900, -900, 700, true);
 	
 		pid.closePID();
 		runnable.runFinished();
