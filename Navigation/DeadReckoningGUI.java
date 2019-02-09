@@ -28,6 +28,9 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import EV3.MoveTank;
+import Tools.Default;
+
 @SuppressWarnings("serial")
 public class DeadReckoningGUI extends SplineGUI implements MouseListener, MouseMotionListener, ButtonListener{
 
@@ -54,7 +57,6 @@ public class DeadReckoningGUI extends SplineGUI implements MouseListener, MouseM
 	Shape rotatedRect;
 
 	LinkedList<Double> angles = new LinkedList<>();
-	LinkedList<rectangle> rects = new LinkedList<rectangle>();
 
 	boolean onDrag = false;
 
@@ -168,6 +170,8 @@ public class DeadReckoningGUI extends SplineGUI implements MouseListener, MouseM
 				createStartPoints(x + width/2, y + height/2);
 				repaint();
 				setRobotPosition = false;
+				
+				repaint();
 			}
 		});
 
@@ -217,8 +221,10 @@ public class DeadReckoningGUI extends SplineGUI implements MouseListener, MouseM
 		rect.setBounds(x, y, width, height);
 
 		repaint();
+		
+		
 	}
-
+	
 	public void drawRotatedShape(final Graphics2D g2, final Shape shape,
 			final double angle,
 			final float x, final float y) {
@@ -288,8 +294,8 @@ public class DeadReckoningGUI extends SplineGUI implements MouseListener, MouseM
 		
 		g2d.setStroke(new BasicStroke(3));
 		g2d.setColor(Color.RED);
-		for(int i = 0; i<rects.size(); i++) {
-			rects.get(i).draw(g2d);
+		for(int i = 0; i<DeadReckoning.rects.size(); i++) {
+			DeadReckoning.rects.get(i).draw(g2d);
 		}
 
 	}
@@ -358,68 +364,22 @@ public class DeadReckoningGUI extends SplineGUI implements MouseListener, MouseM
 
 	public void saveLocaly() {
 
-		Scanner input = new Scanner(System.in);
-		System.out.println("Add tag for your files: ");
-		String tag = input.nextLine();
-
-		loadAdaptedAngles();
-
 		try {
-			Formatter xs = new Formatter("C:\\Users\\OWNER\\git\\repository\\FLL 2018-2019\\Data\\x-" + tag);
-			Formatter ys = new Formatter("C:\\Users\\OWNER\\git\\repository\\FLL 2018-2019\\Data\\y-" + tag);
-			Formatter angles = new Formatter("C:\\Users\\OWNER\\git\\repository\\FLL 2018-2019\\Data\\angles-" + tag);
+			Formatter obstacles = new Formatter("C:\\Users\\OWNER\\git\\repository\\FLL 2018-2019\\Data\\obstacles");
 
-			for(int i = 0; i<splinePoints.size(); i++) {
-				Point adaptedPoint = getAdaptedPoint((int)splinePoints.get(i).x, (int)splinePoints.get(i).y);
-				xs.format("%s", adaptedPoint.x + "\r\n");
-				ys.format("%s", adaptedPoint.y + "\r\n");
+			for(int i = 0; i<DeadReckoning.rects.size(); i++) {
+				obstacles.format("%s", DeadReckoning.rects.get(i).x1 + "\r\n");
+				obstacles.format("%s", DeadReckoning.rects.get(i).y1 + "\r\n");
+				obstacles.format("%s", DeadReckoning.rects.get(i).x2 + "\r\n");
+				obstacles.format("%s", DeadReckoning.rects.get(i).y2 + "\r\n");
 			}
-
-			for(int i = 0; i<this.angles.size(); i++) {
-				angles.format("%s", this.angles.get(i) + "\r\n");
-			}
-
-			xs.close();
-			ys.close();
-			angles.close();
+			
+			obstacles.close();
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		} finally {
-			input.close();
 		}
-	}
-
-	public void read() { 
-
-		p.reset();
-
-		Scanner input = new Scanner(System.in);
-		System.out.println("Insert file's tag: ");
-		String tag = input.nextLine();
-
-		File xs = new File("C:\\\\Users\\\\OWNER\\\\git\\\\repository\\\\FLL 2018-2019\\\\Data\\\\x-" + tag);
-		File ys = new File("C:\\\\Users\\\\OWNER\\\\git\\\\repository\\\\FLL 2018-2019\\\\Data\\\\y-" + tag);
-		File angles = new File("C:\\\\Users\\\\OWNER\\\\git\\\\repository\\\\FLL 2018-2019\\\\Data\\\\angles-" + tag);
-
-		try {
-			Scanner xSacn = new Scanner(xs);
-			Scanner ySacn = new Scanner(ys);
-			Scanner anglesSacn = new Scanner(angles);
-
-			while(xSacn.hasNext()) {
-				splinePoints.add(new Point((int)Double.parseDouble(xSacn.next()), (int)Double.parseDouble(ySacn.next())));
-			}
-
-			input.close();
-			xSacn.close();
-			ySacn.close();
-			anglesSacn.close();
-
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	
 	}
 
 	@Override
@@ -442,7 +402,7 @@ public class DeadReckoningGUI extends SplineGUI implements MouseListener, MouseM
 	public void mousePressed(MouseEvent e) {
 		if(!Button.buttonPressed) {
 			if (!setRobotPosition) {
-				rects.add(new rectangle(e.getX(), e.getY(), e.getX() + 1, e.getY() + 1));
+				DeadReckoning.rects.add(new rectangle(e.getX(), e.getY(), e.getX() + 1, e.getY() + 1));
 				onDrag = true;
 			}
 			else {
@@ -450,10 +410,14 @@ public class DeadReckoningGUI extends SplineGUI implements MouseListener, MouseM
 					onDrag = true;
 				}
 			}
-			if(SwingUtilities.isRightMouseButton(e) && rects.size() > 0) {
-				rects.remove(rects.size()-1);
-				rects.remove(rects.size()-1);
-				repaint();
+			for(int i = 0; i<DeadReckoning.rects.size(); i++) {
+				if(DeadReckoning.rects.get(i).intersects(new Rectangle(e.getX(), e.getY(), 1, 1))) {
+					if(SwingUtilities.isRightMouseButton(e) && DeadReckoning.rects.size() > 0) {
+						DeadReckoning.rects.remove(DeadReckoning.rects.size()-1);
+						DeadReckoning.rects.remove(i);
+						repaint();
+					}
+				}
 			}
 		}
 	}
@@ -468,9 +432,9 @@ public class DeadReckoningGUI extends SplineGUI implements MouseListener, MouseM
 
 		if (!setRobotPosition) {
 			if(onDrag) {
-				int x1 = rects.get(rects.size()-1).x1;
-				int y1 = rects.get(rects.size()-1).y1;
-				rects.get(rects.size()-1).setBounds(x1, y1, x1 + (e.getX() - x1), y1 + (e.getY() - y1));
+				int x1 = DeadReckoning.rects.get(DeadReckoning.rects.size()-1).x1;
+				int y1 = DeadReckoning.rects.get(DeadReckoning.rects.size()-1).y1;
+				DeadReckoning.rects.get(DeadReckoning.rects.size()-1).setBounds(x1, y1, x1 + (e.getX() - x1), y1 + (e.getY() - y1));
 			}
 		}
 		else {
@@ -538,7 +502,7 @@ public class DeadReckoningGUI extends SplineGUI implements MouseListener, MouseM
 			new Thread() {
 				@Override
 				public void run() {
-					read();
+					DeadReckoning.read();
 				}
 			}.start();
 		}
