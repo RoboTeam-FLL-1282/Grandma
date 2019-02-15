@@ -66,7 +66,7 @@ public class PID {
 	 * @param currentValue - Current sensor value.
 	 * @return - PID error.
 	 */
-	private double calculateError(double currentValue) {
+	public double calculateError(double currentValue) {
 		return target - currentValue;
 	}
 	
@@ -81,21 +81,21 @@ public class PID {
 	/**
 	 * @return - The proportional function.
 	 */
-	private double P() {
+	public double P() {
 		return kp*error;
 	}
 	
 	/**
 	 * @return - Updated integral summation.
 	 */
-	private double I() {
+	public double I() {
 		return ki*error + reset;
 	}
 	
 	/**
 	 * @return - The derivative calculation. 
 	 */
-	private double D() {
+	public double D() {
 		return kd*error + (kd/time)*(error-lastError);
 	}
 	

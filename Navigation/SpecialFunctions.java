@@ -24,7 +24,7 @@ public class SpecialFunctions {
 		new Thread() {
 			@Override
 			public void run() {
-				while(smiley) {
+				while(smiley && RunsMenu.active) {
 					Display.resetScreen();
 					BrickLight.on(1);
 					Wait.time(500);
@@ -67,7 +67,7 @@ public class SpecialFunctions {
 		if(!RunsMenu.active) return pid; // Break point
 		Sound.beep(100);
 		pid.startPID();
-		Wait.time(500);
+		Wait.time(700);
 		pid.stopPID();
 		Sound.beep(100);
 		if(!RunsMenu.active) return pid; // Break point
@@ -161,5 +161,64 @@ public class SpecialFunctions {
  
 		return pid;
 	}
+	
+	public static GyroPID getToOppositeSection() {
+		GyroPID pid = new GyroPID(-20, 1, 0.001, 0.001);
+		pid.setBaseSpeed(-400);
+		smiley();
+		Sound.beep(100);
+		BrickButtons.waitForAnyPress();
+		smileyOff();
+		GyroPID.g.recalibrate();
 
+		// Move robot forwards and align on the white line.
+		if(!RunsMenu.active) return pid; // Break point
+		Sound.beep(100);
+		pid.startPID();
+		Wait.time(2800);
+		pid.stopPID();
+		Sound.beep(100);
+		if(!RunsMenu.active) return pid; // Break point
+		
+		Wait.time(500);
+		
+		// Align on white line and then turn x degrees
+		WhiteLineAlignment.find(-400);
+		MoveTank.onForCent(-100, -100, 50, true);
+		BlackLineAlignment.find(200);
+		WhiteLineAlignment.find(200);
+		MoveTank.onForCent(200, 200, 200, false);
+		
+		if(!RunsMenu.active) return pid; // Break point
+		Sound.beep(100);
+		GyroPID.g.reset();
+
+		//Turn and move to the T.
+		Traveler t = new Traveler(0, 0, 12, 8.2);
+		t.turnInSpot(35, -100);
+		if(!RunsMenu.active) return pid; // Break point
+		pid.setTarget(GyroPID.g.angle());
+		pid.setBaseSpeed(-100);
+		pid.startPID();
+		if(!RunsMenu.active) return pid; // Break point
+		Wait.time(2000);
+		pid.stopPID();
+		if(!RunsMenu.active) return pid; // Break point
+		
+		// Find line, move forwards and then align backwards.
+		BlackLineAlignment.find(Sides.LEFT, -150);
+		if(!RunsMenu.active) return pid; // Break point
+		MoveTank.onForCent(-250, -250, 200, true);
+		if(!RunsMenu.active) return pid; // Break point
+		t.turnInSpot(65, -100);
+		if(!RunsMenu.active) return pid; // Break point
+		BlackLineAlignment.find(-200);
+		if(!RunsMenu.active) return pid; // Break point
+		MoveTank.onForCent(-200, -200, 70, true);
+		if(!RunsMenu.active) return pid; // Break point
+		BlackLineAlignment.align(100);
+		if(!RunsMenu.active) return pid; // Break point
+ 
+		return pid;
+	}
 }
