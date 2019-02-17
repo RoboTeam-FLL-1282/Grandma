@@ -73,9 +73,13 @@ public class Traveler {
 	 */
 	public void arc(double velocity, double radius, double degrees, Sides side) {
 		double disin = 2*Math.PI*radius*degrees/360;
-		double disout = disin+2*TrackWidth*Math.PI;
+		double disout = 2*Math.PI*(radius+TrackWidth)*degrees/360;
+		double vOut = velocity*disout/disin;
+		double wheelDeg = 360/disin/WheelDiameter*Math.PI;
 		if(side == Sides.LEFT)
-			MoveTank.onForSeconds(velocity, velocity*disout/disin, disin/velocity, true);
+			MoveTank.onForDegrees((float)velocity, (float)vOut, wheelDeg, true, Sides.LEFT);
+		else
+			MoveTank.onForDegrees((float)vOut, (float)velocity, wheelDeg, true, Sides.RIGHT);
 	}
 
 	/**

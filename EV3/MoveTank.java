@@ -1,11 +1,12 @@
 package EV3;
+import Motion.Sides;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.port.Port;
 import lejos.utility.Delay;
 public class MoveTank {
 
-	static EV3LargeRegulatedMotor leftMotor;
-	static EV3LargeRegulatedMotor rightMotor;
+	public static EV3LargeRegulatedMotor leftMotor;
+	public static EV3LargeRegulatedMotor rightMotor;
 	
 	/**
 	 * Must be called before any other method.
@@ -65,6 +66,20 @@ public class MoveTank {
 			rightMotor.stop(true);
 		}
 	}
+	
+	public static void onForDegrees(float leftSpeed, float rightSpeed, double degrees, boolean brakeAtEnd, Sides side) {
+		leftMotor.setSpeed(Math.abs(leftSpeed));
+		rightMotor.setSpeed(Math.abs(rightSpeed));
+		
+		double speed = (side == Sides.LEFT)?leftSpeed:rightSpeed; 
+		
+		move(leftSpeed, rightSpeed);
+		Delay.msDelay((int)((degrees/Math.abs(speed))*1000));
+		if(brakeAtEnd) {
+			leftMotor.stop(true);
+			rightMotor.stop(true);
+		}
+	}
 
 	/**
 	 * @param leftSpeed
@@ -117,7 +132,7 @@ public class MoveTank {
 		rightMotor.setSpeed(Math.abs(rightSpeed));
 		
 	}
-
+	
 	/**
 	 * Stops the motors.
 	 */

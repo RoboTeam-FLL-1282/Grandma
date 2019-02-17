@@ -70,12 +70,12 @@ public class MediumMotor {
 	 * @param seconds
 	 * @param brakeAtEnd
 	 */
-	public void onForSeconds(int speed, int seconds, boolean brakeAtEnd) {
+	public void onForSeconds(int speed, double seconds, boolean brakeAtEnd) {
 
 		move(speed);
 
 		// Wait:
-		Delay.msDelay(seconds*1000);
+		Delay.msDelay((int)(seconds*1000));
 
 		// Break at end?
 		if(brakeAtEnd) {

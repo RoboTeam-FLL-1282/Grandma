@@ -54,4 +54,24 @@ public class Accelerator {
 			MoveTank.off();
 	}
 	
+	public static void acceleratePID(GyroPID pid, double duration, double startSpeed, double endSpeed, boolean brakeAtEnd) {
+		
+		int loops = (int)Math.abs((endSpeed - startSpeed)/duration);
+		int wait = (int)(duration/loops * 1000);
+		double change = (endSpeed - startSpeed)/loops;
+		
+		double speed = (int)startSpeed;
+		
+		for(int i = 0; i<loops; i++) {
+			pid.setBaseSpeed(speed);
+			speed += change;
+			Wait.time(wait);
+		}
+		
+		if(brakeAtEnd)
+			pid.stopPID();
+	}
+	
+	
+	
 }
