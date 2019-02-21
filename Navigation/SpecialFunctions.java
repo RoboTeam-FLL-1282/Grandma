@@ -195,26 +195,26 @@ public class SpecialFunctions {
 
 		//Turn and move to the T.
 		Traveler t = new Traveler(0, 0, 12, 8.2);
-		t.turnInSpot(33, -100); // changed from 35
+		t.turnInSpot(32, -100); // changed from 35
 		if(!RunsMenu.active) return pid; // Break point
 		pid.setTarget(GyroPID.g.angle());
-		pid.setBaseSpeed(-400);
+		pid.setBaseSpeed(-450);
 		pid.startPID();
 		if(!RunsMenu.active) return pid; // Break point
-		Wait.time(1500);
+		Wait.time(1300);
 		pid.stopPID();
 		if(!RunsMenu.active) return pid; // Break point
 		
 		// Find line, move forwards and then align backwards.
 		BlackLineAlignment.find(Sides.LEFT, -150);
 		if(!RunsMenu.active) return pid; // Break point
-		MoveTank.onForCent(-250, -250, 220, true);
+		MoveTank.onForCent(-250, -250, 200, true);
 		if(!RunsMenu.active) return pid; // Break point
-		t.turnInSpot(57, -100);
+		t.turnInSpot(48, -100);
 		if(!RunsMenu.active) return pid; // Break point
-		BlackLineAlignment.find(-100);
+		BlackLineAlignment.find(Sides.LEFT, -100); // Changed
 		if(!RunsMenu.active) return pid; // Break point
-		MoveTank.onForCent(-100, -100, 100, true);
+		MoveTank.onForCent(-200, -200, 70, true);
 		if(!RunsMenu.active) return pid; // Break point
 		BlackLineAlignment.align(100);
 		if(!RunsMenu.active) return pid; // Break point
